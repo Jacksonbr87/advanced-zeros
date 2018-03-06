@@ -29,6 +29,23 @@ module.exports = function getZerosCount(number, base) {
     console.log("maxEasyDivider = " + maxEasyDivider + " of Base = " + baseNumber);
 
     //-----------------------------//
+    // minEasyDivider -------------//
+    //-----------------------------//
+
+    var minEasyDivider = 2;
+    do {
+        if (baseNumber % minEasyDivider == 0) {
+            break;
+
+        } else {
+            minEasyDivider++;
+        }
+    }
+    while (maxEasyDivider < num);
+
+    console.log("minEasyDivider = " + minEasyDivider + " of Base = " + baseNumber);
+
+    //-----------------------------//
     // maxDivider -----------------//
     //-----------------------------//
 
@@ -47,35 +64,69 @@ module.exports = function getZerosCount(number, base) {
     }
     console.log("FINAL: maxDivider = " + maxDivider + " of Base = " + baseNumber);
 
-    //------------------------------------------------------------//
-    // Check if maxEasyDivider has a degree for higher divider ---//
-    //------------------------------------------------------------//
+    //-----------------------------------------------------------//
+    // Check if minEasyDivider has a degree of higher divider ---//
+    //-----------------------------------------------------------//
 
-    var degreeOfDivider = 1;
-    var degreeOfDividerTemp = 1;
+    var degreeOfMinDivider = 1;
+    var degreeOfMinDividerTemp = 1;
 
     for (i = 2; i <= 8; i++) {
-        degreeOfDividerTemp = Math.pow(maxEasyDivider, i);
+        degreeOfMinDividerTemp = Math.pow(minEasyDivider, i);
 
-        if (degreeOfDividerTemp > baseNumber) {
+        if (degreeOfMinDividerTemp > baseNumber) {
             break;
         }
 
-        if (baseNumber % degreeOfDividerTemp === 0) {
-            degreeOfDivider = i;
-            console.log("degreeOfDivider = " + degreeOfDivider + " of maxEasyDivider = " + maxEasyDivider);
+        if (baseNumber % degreeOfMinDividerTemp === 0) {
+            degreeOfMinDivider = i;
+            console.log("degreeOfMinDivider = " + degreeOfMinDivider + " of minEasyDivider = " + minEasyDivider);
         }
     }
-    console.log("FINAL: degreeOfDivider = " + degreeOfDivider + " of maxEasyDivider = " + maxEasyDivider);
+    console.log("FINAL: degreeOfMinDivider = " + degreeOfMinDivider + " of minEasyDivider = " + minEasyDivider);
+
+    //-----------------------------------------------------------//
+    // Check if maxEasyDivider has a degree of higher divider ---//
+    //-----------------------------------------------------------//
+
+    var degreeOfMaxDivider = 1;
+    var degreeOfMaxDividerTemp = 1;
+
+    for (i = 2; i <= 8; i++) {
+        degreeOfMaxDividerTemp = Math.pow(maxEasyDivider, i);
+
+        if (degreeOfMaxDividerTemp > baseNumber) {
+            break;
+        }
+
+        if (baseNumber % degreeOfMaxDividerTemp === 0) {
+            degreeOfMaxDivider = i;
+            console.log("degreeOfMaxDivider = " + degreeOfMaxDivider + " of maxEasyDivider = " + maxEasyDivider);
+        }
+    }
+    console.log("FINAL: degreeOfMaxDivider = " + degreeOfMaxDivider + " of maxEasyDivider = " + maxEasyDivider);
 
     //-----------------------------//
     // Easy zero counter ----------//
     //-----------------------------//
 
+    var degreeOfDivider = 1;
+    var easyDivider = 1;
+
+    if (degreeOfMinDivider > degreeOfMaxDivider &&
+        degreeOfMinDivider >= maxEasyDivider &&
+        degreeOfMaxDivider == 1) {
+        degreeOfDivider = degreeOfMinDivider;
+        easyDivider = minEasyDivider;
+    } else {
+        degreeOfDivider = degreeOfMaxDivider;
+        easyDivider = maxEasyDivider;
+    }
+
     do {
-        zerosCount = Math.floor(zerosCount / maxEasyDivider);
+        zerosCount = Math.floor(zerosCount / easyDivider);
         result = result + zerosCount;
-    } while (zerosCount >= maxEasyDivider);
+    } while (zerosCount >= easyDivider);
 
     result = Math.floor(result / degreeOfDivider);
     console.log("result = " + result);
